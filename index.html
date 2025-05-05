@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentina Lin - Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Fixed top bar -->
+  <div class="topbar">
+    <h1>Valentina Lin</h1>
+  </div>
+
+  <div class="main-layout">
+    <!-- Sticky sidebar nav -->
+    <nav class="sidebar">
+      <a href="#about" id="link-about">About</a>
+      <a href="#projects" id="link-projects">Projects</a>
+      <a href="#skills" id="link-skills">Skills</a>
+      <a href="#contact" id="link-contact">Contact</a>
+    </nav>
+
+    <!-- Scrollable main content -->
+    <div class="content-area">
+
+      <!-- ABOUT -->
+      <div id="about" class="group-box">
+        <div class="content-box">
+          <h2>About</h2>
+          <p>I’m an up-and-coming data scientist and machine learning engineer who enjoys exploring ideas across disciplines! 😄</p>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div id="projects" class="group-box">
+        <h2 style="margin-bottom: 10px;">Projects</h2>
+        <div class="carousel-wrapper">
+          <div class="carousel" id="carousel">
+            <!-- Example cards -->
+            <div class="carousel-card">
+              <img src="https://placeimg.com/300/200/tech" alt="Project 1">
+              <div class="card-title">Project 1</div>
+              <p>Short description of the project.</p>
+            </div>
+            <div class="carousel-card">
+              <img src="https://placeimg.com/301/200/tech" alt="Project 2">
+              <div class="card-title">Project 2</div>
+              <p>Description of what you built or learned.</p>
+            </div>
+            <div class="carousel-card">
+              <img src="https://placeimg.com/302/200/tech" alt="Project 3">
+              <div class="card-title">Project 3</div>
+              <p>Project highlight or takeaway.</p>
+            </div>
+            <!-- Add more project cards as needed -->
+          </div>
+
+          <!-- Carousel controls -->
+          <div class="carousel-controls">
+            <button id="prevBtn">&#x276E;</button>
+            <div class="carousel-indicator" id="carouselIndicator">1 / 3 +</div>
+            <button id="pauseBtn">⏸️</button>
+            <button id="nextBtn">&#x276F;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div id="skills" class="group-box">
+        <div class="content-box">
+          <h2>Skills</h2>
+          <p>Python, Machine Learning, Data Visualization, SQL, Git, etc.</p>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div id="contact" class="group-box">
+        <div class="content-box">
+          <h2>Contact</h2>
+          <p>Email: valentina_lin@brown.edu</p>
+          <p><a href="#">Download my Resume</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Scroll highlight
+    const sections = document.querySelectorAll('.content-area > div');
+    const navLinks = document.querySelectorAll('.sidebar a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Carousel logic
+    const carousel = document.getElementById('carousel');
+    const cards = carousel.querySelectorAll('.carousel-card');
+    const indicator = document.getElementById('carouselIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    let currentIndex = 0;
+    let paused = false;
+    let interval;
+
+    function updateIndicator() {
+      indicator.textContent = `${currentIndex + 1} / ${cards.length} +`;
+    }
+
+    function scrollToIndex(index) {
+      const cardWidth = cards[0].offsetWidth + 20;
+      carousel.scrollLeft = index * cardWidth;
+      updateIndicator();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      scrollToIndex(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      scrollToIndex(currentIndex);
+    }
+
+    function startAutoScroll() {
+      interval = setInterval(() => {
+        if (!paused) nextSlide();
+      }, 3000);
+    }
+
+    pauseBtn.addEventListener('click', () => {
+      paused = !paused;
+      pauseBtn.textContent = paused ? '▶️' : '⏸️';
+    });
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    updateIndicator();
+    startAutoScroll();
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+body {
+    background: #DCE5CE;
+    font-family: monospace;
+    margin: 0;
+  }
+  
+  /* Top bar */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-bottom: 2px solid #97be72;
+    padding: 15px;
+    z-index: 1000;
+  }
+  .topbar h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #444;
+  }
+  
+  /* Layout */
+  .main-layout {
+    display: flex;
+    margin-top: 70px; /* offset for fixed topbar */
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    left: 0;
+    width: 180px;
+    background: white;
+    border: 2px solid #97be72;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .sidebar a {
+    display: block;
+    color: #5A9355;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .sidebar a.active {
+    background: rgba(100, 160, 100, 0.2);
+    border-radius: 5px;
+    padding: 3px;
+  }
+  
+  /* Content Area */
+  .content-area {
+    flex: 1;
+    margin-left: 220px;
+    padding: 20px;
+  }
+  
+  /* Green box around sections */
+  .group-box {
+    background: rgba(100, 160, 100, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  /* White box with green border inside sections */
+  .content-box {
+    background: white;
+    border: 2px solid #97be72;
+    border-radius: 15px;
+    padding: 20px;
+  }
+  
+  /* Project Carousel */
+  .carousel-wrapper {
+    position: relative;
+  }
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding-bottom: 40px;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .carousel-card {
+    flex: 0 0 auto;
+    width: 300px;
+    background: white;
+    border: 2px solid #97be72;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .carousel-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Carousel controls */
+  .carousel-controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .carousel-controls button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .carousel-indicator {
+    background: #ccc;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
