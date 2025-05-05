@@ -36,13 +36,26 @@
     border-right: 2px solid var(--green-border);
     padding: 20px;
     overflow-y: auto;
-    transition: width 0.3s, transform 0.3s;
+    transition: width 0.3s, padding 0.3s;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     z-index: 900;
   }
-  .sidebar.collapsed { width: 50px; padding: 10px; }
-  .sidebar.collapsed #sidebarLinks { display: none; }
+  
+  /* Collapsed sidebar */
+  .sidebar.collapsed { 
+    width: 20px; 
+    padding: 20px 10px;
+  }
+  
+  .sidebar.collapsed #sidebarLinks { 
+    display: none; 
+  }
+  
+  .sidebar.collapsed .sidebar-toggle {
+    margin-bottom: 0;
+  }
+  
   .sidebar a {
     display: block;
     color: #333;
@@ -62,6 +75,7 @@
     font-size: 1.5rem;
     cursor: pointer;
     margin-bottom: 15px;
+    padding: 0;
   }
   
   /* Content */
@@ -73,7 +87,7 @@
   }
   .sidebar.collapsed + .content-area,
   .sidebar.collapsed ~ .content-area {
-    margin-left: 120px;
+    margin-left: 80px;
   }
   
   .group-box {
@@ -108,6 +122,11 @@
     scroll-snap-type: x mandatory; /* Improve scrolling behavior */
   }
   
+  /* When carousel is paused, hide the cloned cards */
+  .carousel.paused .carousel-card:nth-child(n+5) {
+    display: none;
+  }
+  
   .carousel::-webkit-scrollbar { 
     display: none; /* Hide scrollbar */
   }
@@ -122,16 +141,27 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    opacity: 0.7; /* Default state is semi-transparent */
     transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
     scroll-snap-align: center; /* Improve scrolling behavior */
   }
   
+  /* Default state for all cards (no special styling) */
+  .carousel-card {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* Active card styling when playing */
   .carousel-card.active-card {
     opacity: 1;
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     z-index: 10;
+  }
+  
+  /* Inactive cards styling when playing */
+  .carousel:not(.paused) .carousel-card:not(.active-card) {
+    opacity: 0.7;
   }
   
   .project-image {
@@ -189,7 +219,7 @@
     }
     .sidebar {
       position: fixed;
-      width: 100vw;
+      width: 100%;
       height: auto;
       top: 0;
       left: 0;
@@ -200,13 +230,29 @@
       padding: 10px;
       z-index: 1000;
     }
-    .sidebar-toggle { font-size: 1.2rem; margin-right: 10px; }
-    .sidebar.collapsed { width: 100vw; }
-    .sidebar a { margin: 0 8px; display: inline-block; }
-    .group-box { max-width: 100%; margin-bottom: 40px; }
+    .sidebar-toggle { 
+      font-size: 1.2rem; 
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+    .sidebar.collapsed { 
+      width: auto;
+      padding: 10px; 
+    }
+    .sidebar a { 
+      margin: 0 8px; 
+      display: inline-block; 
+    }
+    .group-box { 
+      max-width: 100%; 
+      margin-bottom: 40px; 
+    }
     .carousel-card { 
       width: 250px; 
       min-width: 250px; 
     }
-    .carousel { gap: 10px; }
+    .carousel { 
+      gap: 10px; 
+      padding: 10px 0;
+    }
   }
