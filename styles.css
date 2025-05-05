@@ -36,16 +36,25 @@
     border-right: 2px solid var(--green-border);
     padding: 20px;
     overflow-y: auto;
-    transition: width 0.3s, padding 0.3s;
+    transition: all 0.3s ease;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     z-index: 900;
   }
   
-  /* Collapsed sidebar */
+  /* Collapsed sidebar - small square with rounded right corners */
   .sidebar.collapsed { 
-    width: 20px; 
-    padding: 20px 10px;
+    width: 15px; 
+    height: auto;
+    padding: 10px;
+    max-height: 36px;
+    border-radius: 0 5px 5px 0;
+    background-color: var(--inner-bg);
+    border-left: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .sidebar.collapsed #sidebarLinks { 
@@ -53,7 +62,7 @@
   }
   
   .sidebar.collapsed .sidebar-toggle {
-    margin-bottom: 0;
+    margin: 0;
   }
   
   .sidebar a {
@@ -85,9 +94,8 @@
     padding: 20px;
     transition: margin-left 0.3s;
   }
-  .sidebar.collapsed + .content-area,
   .sidebar.collapsed ~ .content-area {
-    margin-left: 80px;
+    margin-left: 60px;
   }
   
   .group-box {
@@ -97,7 +105,12 @@
     margin-bottom: 80px; /* space between boxes */
     max-width: calc(100vw - 300px);
     overflow: hidden;
+    transition: max-width 0.3s;
   }
+  .sidebar.collapsed ~ .content-area .group-box {
+    max-width: calc(100vw - 120px);
+  }
+  
   .content-box {
     background: white;
     border: 2px solid var(--green-border);
@@ -105,63 +118,41 @@
     padding: 20px;
   }
   
-  /* Carousel */
-  .carousel-wrapper { 
-    position: relative; 
-    overflow: hidden;
-    margin-bottom: 15px; /* Add space for controls below */
-  }
-  
-  .carousel {
+  /* Project container with horizontal scroll */
+  .project-container {
     display: flex;
+    overflow-x: auto;
     gap: 20px;
     padding: 20px 0;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    max-width: 100%;
-    scroll-snap-type: x mandatory; /* Improve scrolling behavior */
+    margin-left: 0; /* Left-aligned */
+    scroll-padding-left: 0; /* Ensure left alignment */
   }
   
-  /* When carousel is paused, hide the cloned cards */
-  .carousel.paused .carousel-card:nth-child(n+5) {
-    display: none;
+  .project-container::-webkit-scrollbar {
+    height: 6px;
   }
   
-  .carousel::-webkit-scrollbar { 
-    display: none; /* Hide scrollbar */
+  .project-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
   }
   
-  .carousel-card {
+  .project-container::-webkit-scrollbar-thumb {
+    background: var(--green-border);
+    border-radius: 10px;
+  }
+  
+  .project-card {
     flex: 0 0 auto;
     width: 300px;
+    min-width: 75%; /* Ensures at least one card is fully visible on mobile */
     background: white;
     border: 2px solid var(--green-border);
     border-radius: 15px;
-    padding: 10px;
+    padding: 15px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
-    scroll-snap-align: center; /* Improve scrolling behavior */
-  }
-  
-  /* Default state for all cards (no special styling) */
-  .carousel-card {
-    opacity: 1;
-    transform: scale(1);
-  }
-  
-  /* Active card styling when playing */
-  .carousel-card.active-card {
-    opacity: 1;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 10;
-  }
-  
-  /* Inactive cards styling when playing */
-  .carousel:not(.paused) .carousel-card:not(.active-card) {
-    opacity: 0.7;
   }
   
   .project-image {
@@ -171,42 +162,9 @@
     margin-bottom: 10px;
     object-fit: cover;
   }
-  .carousel-card h3 { margin: 5px 0; font-size: 1.1rem; }
-  .carousel-card p { flex-grow: 1; margin: 0 0 5px; }
-  .carousel-card small { font-size: 0.8rem; color: #555; }
-  
-  /* Controls - positioned INSIDE the group-box, not absolute */
-  .carousel-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .carousel-controls button {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  
-  .carousel-controls button:hover {
-    color: var(--green-border);
-  }
-  
-  .carousel-indicator {
-    background: var(--green-border);
-    border-radius: 999px;
-    padding: 5px 10px;
-    font-size: 0.9rem;
-    color: white;
-    display: inline-flex;
-    align-items: center;
-  }
+  .project-card h3 { margin: 5px 0; font-size: 1.1rem; }
+  .project-card p { flex-grow: 1; margin: 0 0 5px; }
+  .project-card small { font-size: 0.8rem; color: #555; }
   
   /* Anchor offset */
   .section-anchor { scroll-margin-top: 90px; }
@@ -214,45 +172,75 @@
   /* Responsive */
   @media (max-width: 768px) {
     .content-area {
-      margin-left: 0;
+      margin-left: 0 !important;
       padding: 10px;
     }
+    
+    .group-box { 
+      max-width: calc(100vw - 20px) !important;
+      margin-bottom: 40px; 
+    }
+    
     .sidebar {
-      position: fixed;
-      width: 100%;
-      height: auto;
-      top: 0;
+      top: 70px;
+      bottom: auto;
       left: 0;
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      border-radius: 0;
+      height: auto;
+      width: auto;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
       padding: 10px;
       z-index: 1000;
     }
+    
+    .sidebar:not(.collapsed) {
+      width: auto;
+      max-width: 200px;
+      padding: 15px;
+      background-color: var(--inner-bg);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
     .sidebar-toggle { 
       font-size: 1.2rem; 
-      margin-right: 10px;
-      margin-bottom: 0;
+      margin: 0;
+      padding: 0;
     }
+    
     .sidebar.collapsed { 
-      width: auto;
-      padding: 10px; 
+      width: 35px;
+      height: auto;
+      padding: 8px;
+      margin: 0;
     }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      font-size: 1.2rem;
+      margin: 0;
+      padding: 0;
+    }
+    
     .sidebar a { 
-      margin: 0 8px; 
-      display: inline-block; 
+      margin: 8px 0; 
+      display: block;
+      padding: 5px;
     }
-    .group-box { 
-      max-width: 100%; 
-      margin-bottom: 40px; 
+    
+    /* Adjust project cards for smaller screens */
+    .project-card {
+      width: calc(100% - 30px);
+      min-width: 250px; /* Minimum width on mobile */
     }
-    .carousel-card { 
-      width: 250px; 
-      min-width: 250px; 
+  }
+  
+  /* For very small screens ensure at least one card is visible */
+  @media (max-width: 480px) {
+    .project-card {
+      min-width: 85%;
     }
-    .carousel { 
-      gap: 10px; 
-      padding: 10px 0;
+    
+    .sidebar.collapsed {
+      width: 30px;
+      padding: 6px;
     }
   }
