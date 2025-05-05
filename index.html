@@ -9,12 +9,9 @@
 </head>
 <body>
 
-  <!-- Fixed top bar -->
-  <div class="topbar">
-    <h1>Valentina Lin</h1>
-  </div>
+  <div class="topbar"><h1>Valentina Lin</h1></div>
 
-  <!-- Toggleable sidebar -->
+  <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <button class="sidebar-toggle" id="sidebarToggle">
       <span class="iconify" data-icon="mingcute/menu-fill"></span>
@@ -28,10 +25,9 @@
   </nav>
 
   <div class="main-layout">
-    <!-- Content area -->
     <div class="content-area">
 
-      <!-- ABOUT -->
+      <!-- About -->
       <div id="about" class="group-box section-anchor">
         <div class="content-box">
           <h2>About</h2>
@@ -39,39 +35,56 @@
         </div>
       </div>
 
-      <!-- PROJECTS -->
+      <!-- Projects -->
       <div id="projects" class="group-box section-anchor">
         <h2>Projects</h2>
         <div class="carousel-wrapper">
           <div class="carousel" id="carousel">
-            <!-- Multiple projects -->
-            <div class="carousel-card"><img src="https://placeimg.com/300/200/tech" alt="Project 1"><div class="card-title">Project 1</div><p>Desc 1</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/301/200/tech" alt="Project 2"><div class="card-title">Project 2</div><p>Desc 2</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/302/200/tech" alt="Project 3"><div class="card-title">Project 3</div><p>Desc 3</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/303/200/tech" alt="Project 4"><div class="card-title">Project 4</div><p>Desc 4</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/304/200/tech" alt="Project 5"><div class="card-title">Project 5</div><p>Desc 5</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/305/200/tech" alt="Project 6"><div class="card-title">Project 6</div><p>Desc 6</p></div>
-            <div class="carousel-card"><img src="https://placeimg.com/306/200/tech" alt="Project 7"><div class="card-title">Project 7</div><p>Desc 7</p></div>
+            <!-- 4 Projects -->
+            <div class="carousel-card">
+              <div class="project-image"></div>
+              <h3>Image Classifier</h3>
+              <p>Built a CNN-based image classifier achieving 92% accuracy on CIFAR-10 dataset.</p>
+              <small>Machine Learning, TensorFlow, Python</small>
+            </div>
+            <div class="carousel-card">
+              <div class="project-image"></div>
+              <h3>Portfolio Website</h3>
+              <p>Designed and coded a personal portfolio using HTML, CSS, and JavaScript.</p>
+              <small>Web Dev, Frontend, Design</small>
+            </div>
+            <div class="carousel-card">
+              <div class="project-image"></div>
+              <h3>Chatbot</h3>
+              <p>Created a rule-based customer support chatbot using Python and NLTK.</p>
+              <small>NLP, Python, UI Design</small>
+            </div>
+            <div class="carousel-card">
+              <div class="project-image"></div>
+              <h3>Data Dashboard</h3>
+              <p>Developed an interactive data visualization dashboard using D3.js.</p>
+              <small>Data Viz, D3.js, JavaScript</small>
+            </div>
           </div>
-          <!-- Controls -->
+
           <div class="carousel-controls">
             <button id="prevBtn">&#x276E;</button>
-            <div class="carousel-indicator" id="carouselIndicator">1 / 7</div>
-            <button id="pauseBtn"><span class="iconify" data-icon="material-symbols/pause-rounded"></span></button>
+            <div class="carousel-indicator" id="carouselIndicator">1 / 4</div>
+            <button id="pauseBtn"><span class="iconify" data-icon="material-symbols:pause-rounded"></span></button>
             <button id="nextBtn">&#x276F;</button>
           </div>
         </div>
       </div>
 
-      <!-- SKILLS -->
+      <!-- Skills -->
       <div id="skills" class="group-box section-anchor">
         <div class="content-box">
           <h2>Skills</h2>
-          <p>Python, Machine Learning, SQL, Git, etc.</p>
+          <p>Python, Machine Learning, SQL, Git, D3.js, TensorFlow</p>
         </div>
       </div>
 
-      <!-- CONTACT -->
+      <!-- Contact -->
       <div id="contact" class="group-box section-anchor">
         <div class="content-box">
           <h2>Contact</h2>
@@ -83,83 +96,67 @@
     </div>
   </div>
 
-  <script>
-    // Sidebar toggle
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
+<script>
+// Sidebar toggle
+const sidebar = document.getElementById('sidebar');
+document.getElementById('sidebarToggle').addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+});
 
-    // Scroll highlight
-    const sections = document.querySelectorAll('.section-anchor');
-    const navLinks = document.querySelectorAll('.sidebar a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 90;
-        if (scrollY >= sectionTop) {
-          current = section.getAttribute('id');
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    });
+// Active link highlight
+const sections = document.querySelectorAll('.section-anchor');
+const navLinks = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 90;
+    if (scrollY >= sectionTop) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+  });
+});
 
-    // Carousel logic
-    const carousel = document.getElementById('carousel');
-    const cards = carousel.querySelectorAll('.carousel-card');
-    const indicator = document.getElementById('carouselIndicator');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
+// Carousel
+const carousel = document.getElementById('carousel');
+const cards = carousel.querySelectorAll('.carousel-card');
+const indicator = document.getElementById('carouselIndicator');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+let currentIndex = 0, paused = false, interval;
 
-    let currentIndex = 0;
-    let paused = false;
-    let interval;
-
-    function updateIndicator() {
-      indicator.textContent = `${currentIndex + 1} / ${cards.length}`;
-    }
-
-    function scrollToIndex(index) {
-      const cardWidth = cards[0].offsetWidth + 20;
-      carousel.scrollLeft = index * cardWidth;
-      updateIndicator();
-    }
-
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % cards.length;
-      scrollToIndex(currentIndex);
-    }
-
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-      scrollToIndex(currentIndex);
-    }
-
-    function startAutoScroll() {
-      interval = setInterval(() => {
-        if (!paused) nextSlide();
-      }, 3000);
-    }
-
-    pauseBtn.addEventListener('click', () => {
-      paused = !paused;
-      pauseBtn.innerHTML = paused
-        ? '<span class="iconify" data-icon="iconoir/play-solid"></span>'
-        : '<span class="iconify" data-icon="material-symbols/pause-rounded"></span>';
-    });
-
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-
-    updateIndicator();
-    startAutoScroll();
-  </script>
+function updateIndicator() {
+  indicator.textContent = `${(currentIndex % cards.length) + 1} / ${cards.length}`;
+}
+function scrollToIndex(index) {
+  const cardWidth = cards[0].offsetWidth + 20;
+  carousel.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+  updateIndicator();
+}
+function nextSlide() {
+  currentIndex++;
+  if (currentIndex >= cards.length) currentIndex = 0;
+  scrollToIndex(currentIndex);
+}
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+  scrollToIndex(currentIndex);
+}
+function startAutoScroll() {
+  interval = setInterval(() => { if (!paused) nextSlide(); }, 3000);
+}
+pauseBtn.addEventListener('click', () => {
+  paused = !paused;
+  pauseBtn.innerHTML = paused
+    ? '<span class="iconify" data-icon="iconoir:play-solid"></span>'
+    : '<span class="iconify" data-icon="material-symbols:pause-rounded"></span>';
+});
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+updateIndicator();
+startAutoScroll();
+</script>
 </body>
 </html>
