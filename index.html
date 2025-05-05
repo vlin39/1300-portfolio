@@ -9,12 +9,13 @@
 </head>
 <body>
 
+  <!-- Topbar -->
   <div class="topbar"><h1>Valentina Lin</h1></div>
 
-  <!-- Sidebar -->
+  <!-- Sidebar - removed "collapsed" class -->
   <nav class="sidebar" id="sidebar">
     <button class="sidebar-toggle" id="sidebarToggle">
-      <span class="iconify" data-icon="mingcute/menu-fill"></span>
+      <span class="iconify" data-icon="mingcute:menu-fill"></span>
     </button>
     <div id="sidebarLinks">
       <a href="#about" id="link-about">About</a>
@@ -31,7 +32,7 @@
       <div id="about" class="group-box section-anchor">
         <div class="content-box">
           <h2>About</h2>
-          <p>I’m an up-and-coming data scientist and machine learning engineer who enjoys exploring ideas across disciplines! 😄</p>
+          <p>I'm an up-and-coming data scientist and machine learning engineer who enjoys exploring ideas across disciplines! 😄</p>
         </div>
       </div>
 
@@ -40,7 +41,7 @@
         <h2>Projects</h2>
         <div class="carousel-wrapper">
           <div class="carousel" id="carousel">
-            <!-- 4 Projects -->
+            <!-- Only include the original 4 cards - the JS will handle cloning -->
             <div class="carousel-card">
               <div class="project-image"></div>
               <h3>Image Classifier</h3>
@@ -51,29 +52,23 @@
               <div class="project-image"></div>
               <h3>Portfolio Website</h3>
               <p>Designed and coded a personal portfolio using HTML, CSS, and JavaScript.</p>
-              <small>Web Dev, Frontend, Design</small>
+              <small>Web Development, Frontend, UI Design</small>
             </div>
             <div class="carousel-card">
               <div class="project-image"></div>
               <h3>Chatbot</h3>
               <p>Created a rule-based customer support chatbot using Python and NLTK.</p>
-              <small>NLP, Python, UI Design</small>
+              <small>NLP, Python, User Interaction</small>
             </div>
             <div class="carousel-card">
               <div class="project-image"></div>
               <h3>Data Dashboard</h3>
               <p>Developed an interactive data visualization dashboard using D3.js.</p>
-              <small>Data Viz, D3.js, JavaScript</small>
+              <small>Data Visualization, D3.js, JavaScript</small>
             </div>
           </div>
-
-          <div class="carousel-controls">
-            <button id="prevBtn">&#x276E;</button>
-            <div class="carousel-indicator" id="carouselIndicator">1 / 4</div>
-            <button id="pauseBtn"><span class="iconify" data-icon="material-symbols:pause-rounded"></span></button>
-            <button id="nextBtn">&#x276F;</button>
-          </div>
         </div>
+        <!-- Note: Carousel controls are now created by JavaScript and inserted here -->
       </div>
 
       <!-- Skills -->
@@ -96,67 +91,6 @@
     </div>
   </div>
 
-<script>
-// Sidebar toggle
-const sidebar = document.getElementById('sidebar');
-document.getElementById('sidebarToggle').addEventListener('click', () => {
-  sidebar.classList.toggle('collapsed');
-});
-
-// Active link highlight
-const sections = document.querySelectorAll('.section-anchor');
-const navLinks = document.querySelectorAll('.sidebar a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 90;
-    if (scrollY >= sectionTop) current = section.id;
-  });
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
-  });
-});
-
-// Carousel
-const carousel = document.getElementById('carousel');
-const cards = carousel.querySelectorAll('.carousel-card');
-const indicator = document.getElementById('carouselIndicator');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const pauseBtn = document.getElementById('pauseBtn');
-let currentIndex = 0, paused = false, interval;
-
-function updateIndicator() {
-  indicator.textContent = `${(currentIndex % cards.length) + 1} / ${cards.length}`;
-}
-function scrollToIndex(index) {
-  const cardWidth = cards[0].offsetWidth + 20;
-  carousel.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
-  updateIndicator();
-}
-function nextSlide() {
-  currentIndex++;
-  if (currentIndex >= cards.length) currentIndex = 0;
-  scrollToIndex(currentIndex);
-}
-function prevSlide() {
-  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-  scrollToIndex(currentIndex);
-}
-function startAutoScroll() {
-  interval = setInterval(() => { if (!paused) nextSlide(); }, 3000);
-}
-pauseBtn.addEventListener('click', () => {
-  paused = !paused;
-  pauseBtn.innerHTML = paused
-    ? '<span class="iconify" data-icon="iconoir:play-solid"></span>'
-    : '<span class="iconify" data-icon="material-symbols:pause-rounded"></span>';
-});
-nextBtn.addEventListener('click', nextSlide);
-prevBtn.addEventListener('click', prevSlide);
-updateIndicator();
-startAutoScroll();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
